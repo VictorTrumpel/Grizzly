@@ -1,0 +1,1 @@
+import { helloMessage } from "./test";console.log(helloMessage);
