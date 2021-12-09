@@ -108,3 +108,4 @@ dist
 
 server/node_modules/
 server/build/
+node_modules/
