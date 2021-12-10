@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const fs = require('fs');
+const Dotenv = require('dotenv-webpack');
 const nodeModules = {};
 
 fs.readdirSync(path.resolve(__dirname, 'node_modules'))
@@ -21,7 +22,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.ts?$/,
+        test: /\.tsx?$/,
         enforce: 'pre',
         use: [
           'ts-loader',
@@ -35,6 +36,6 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.ts', '.js']
+    extensions: ['.ts', 'tsx', '.js']
   }
 };

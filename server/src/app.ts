@@ -1,20 +1,35 @@
 require('dotenv').config();
-import express from 'express';
+import { User } from './models/models';
+import * as express from 'express';
+import { Express, Request, Response } from 'express';
 import sequelize from '../db';
-import { User } from '../models/models';
+import cors from 'cors';
+import router from './routes';
+const PORT = process.env.PORT;
+const app: Express = express();
+import { ErrorHandlingMiddleware } from './middleware/ErrorHandlingMiddleware';
 
-const PORT = 4000;
+app.use(cors());
+app.use(express.json());
+app.use(process.env.API_URL || '', router);
 
-const app = express();
+// Обработка ошибок
+app.use(ErrorHandlingMiddleware);
 
-console.log(process.env.DB_HOST);
+app.get('/', (req: Request, res: Response) => {
+  console.log('ПОШЕЛ GET запрос');
+  console.log('Тест системы');
+  res.status(200).json({ message: 'WORKING!!!!' });
+});
 
 const start = async () => {
   try {
     await sequelize.authenticate();
     await sequelize.sync();
 
-    app.listen(PORT, () => console.log(`SERVER started on port ${PORT}`));
+    app.listen(PORT, () =>
+      console.log(`SERVER started on port http://localhost:${PORT}`)
+    );
   } catch (e) {
     console.log(e);
   }

@@ -2,20 +2,26 @@
   "compileOnSave": false,
   "compilerOptions": {
     "rootDir": ".",
+    "pretty": true,
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
-    "target": "es2015",
+    "target": "es6",
     "module": "esnext",
+    "strict": true,
     "lib": [
       "dom",
       "dom.iterable",
       "esnext"
     ],
     "skipLibCheck": true,
-    "skipDefaultLibCheck": true
+    "skipDefaultLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "allowUnreachableCode": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true
   }
 }

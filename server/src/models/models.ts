@@ -1,5 +1,11 @@
-import sequelize from '../db';
-import { DataTypes } from 'sequelize';
+import sequelize from '../../db';
+import {
+  DataTypes,
+  NumberDataType,
+  IntegerDataType,
+  ModelCtor,
+  Model
+} from 'sequelize';
 
 export const User = sequelize.define('user', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -9,26 +15,26 @@ export const User = sequelize.define('user', {
 });
 
 export const Basket = sequelize.define('basket', {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autocomplete: true }
+  id: { type: DataTypes.INTEGER, primaryKey: true }
 });
 
 export const BasketDevice = sequelize.define('basket_device', {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autocomplete: true }
+  id: { type: DataTypes.INTEGER, primaryKey: true }
 });
 
 export const Device = sequelize.define('device', {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autocomplete: true },
+  id: { type: DataTypes.INTEGER, primaryKey: true },
   name: { type: DataTypes.STRING, unique: true, allowNull: false },
   img: { type: DataTypes.STRING, allowNull: false }
 });
 
 export const Type = sequelize.define('type', {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autocomplete: true },
+  id: { type: DataTypes.INTEGER, primaryKey: true },
   name: { type: DataTypes.STRING, unique: true, allowNull: false }
 });
 
 export const Brand = sequelize.define('type', {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autocomplete: true },
+  id: { type: DataTypes.INTEGER, primaryKey: true },
   name: { type: DataTypes.STRING, unique: true, allowNull: false }
 });
 
