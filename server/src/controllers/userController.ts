@@ -17,7 +17,6 @@ export class UserController implements IUserController {
     if (!id) {
       return next(ApiError.badRequest('bad request'));
     }
-    console.log(id);
     res.json(id);
   }
 }
