@@ -1,4 +1,13 @@
+const webpack = require('webpack');
 const path = require('path');
+const fs = require('fs');
+const nodeModules = {};
+
+fs.readdirSync(path.resolve(__dirname, 'node_modules'))
+  .filter((x) => ['.bin'].indexOf(x) === -1)
+  .forEach((mod) => {
+    nodeModules[mod] = `commonjs ${mod}`;
+  });
 
 module.exports = {
   mode: 'development',
@@ -8,6 +17,7 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'build')
   },
+  externals: nodeModules,
   module: {
     rules: [
       {
