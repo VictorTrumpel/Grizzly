@@ -1,17 +1,22 @@
 require('dotenv').config();
-import { User, Type } from './models/models';
+import fileUpload from 'express-fileupload';
 import * as express from 'express';
 import bodyParser from 'body-parser';
 import { Express, Request, Response } from 'express';
 import sequelize from '../db';
 import cors from 'cors';
 import router from './routes';
+import path from 'path';
+
+import { ErrorHandlingMiddleware } from './middleware/ErrorHandlingMiddleware';
+
 const PORT = process.env.PORT;
 const app: Express = express();
-import { ErrorHandlingMiddleware } from './middleware/ErrorHandlingMiddleware';
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.resolve(__dirname, '..', 'static')));
+app.use(fileUpload({}));
 app.use(
   bodyParser.urlencoded({
     extended: true

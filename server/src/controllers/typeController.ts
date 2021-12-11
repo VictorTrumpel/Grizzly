@@ -9,11 +9,22 @@ interface ITypeController {
 
 class TypeController implements ITypeController {
   async create(req: Request, res: Response): Promise<any> {
-    const { name } = req.body;
-    const type = await Type.create({ id: 2, name });
-    return res.json(type);
+    try {
+      const { name } = req.body;
+      const type = await Type.create({ name });
+      return res.json(type);
+    } catch (e) {
+      console.log(e);
+    }
   }
-  async getList(req: Request, res: Response): Promise<any> {}
+  async getList(req: Request, res: Response): Promise<any> {
+    try {
+      const types = await Type.findAll();
+      return res.json(types);
+    } catch (e) {
+      console.log(e);
+    }
+  }
 }
 
 export const typeController = new TypeController();
