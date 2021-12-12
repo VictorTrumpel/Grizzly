@@ -33,8 +33,6 @@ export class DeviceController implements IDeviceController {
   async getList(req: Request, res: Response) {
     const { name } = req.query;
 
-    console.log(name);
-
     const devices = await Device.findAll({ where: { name } });
 
     return res.json(devices);
