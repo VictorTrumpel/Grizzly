@@ -21,7 +21,6 @@ export class UserController implements IUserController {
         ApiError.badRequest('Пользователь с таким email уже существует')
       );
     }
-    const hasPassword = await bcrypy.;
   }
 
   async login(req: Request, res: Response) {}

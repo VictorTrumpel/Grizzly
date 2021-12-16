@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from 'express';
-import * as uuid from 'uuid';
 import path from 'path';
 import { Device } from '../models/models';
 import { ApiError } from '../error/ApiError';
@@ -16,7 +15,7 @@ export class DeviceController implements IDeviceController {
       const { name } = req.body;
       const { img } = req.files || { img: null };
 
-      const fileName = uuid.v4() + '.jpg';
+      const fileName = '';
 
       if (!(img instanceof Array)) {
         img?.mv(path.resolve(__dirname, '..', 'static', fileName));

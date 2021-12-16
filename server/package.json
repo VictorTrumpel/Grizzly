@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "dev": "parallelshell  \"npm run webpack-node\" \"npm run start\"",
-    "try": "npm run webpack-node & npm run start",
     "webpack-node": "webpack --progress --watch",
     "start": "nodemon --require dotenv/config ./build/bundle.js"
   },
@@ -48,7 +47,7 @@
     "husky": "^7.0.4",
     "lint-staged": "^12.1.2",
     "nodemon": "^2.0.15",
-    "parallelshell": "^3.0.1",
+    "parallelshell": "^3.0.2",
     "prettier": "^2.3.2",
     "ts-loader": "^4.4.2",
     "ts-node": "^10.4.0",
