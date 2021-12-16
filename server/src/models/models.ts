@@ -7,13 +7,25 @@ import {
   Model
 } from 'sequelize';
 
-export const User = sequelize.define('user', {
-  email: { type: DataTypes.STRING, unique: true },
-  password: { type: DataTypes.STRING },
-  role: { type: DataTypes.STRING, defaultValue: 'USER' }
-});
+type User = {
+  id: number;
+  email: string;
+  password: string;
+  role: string;
+};
+
+export const User = sequelize.define<Model<Omit<User, 'id'>>, Model<User>>(
+  'user',
+  {
+    id: { type: DataTypes.INTEGER, primaryKey: true },
+    email: { type: DataTypes.STRING, unique: true },
+    password: { type: DataTypes.STRING },
+    role: { type: DataTypes.STRING, defaultValue: 'USER' }
+  }
+);
 
 export const Basket = sequelize.define('basket', {
+  userId: { type: DataTypes.INTEGER, unique: true, allowNull: false },
   name: { type: DataTypes.STRING, unique: true, allowNull: false }
 });
 
