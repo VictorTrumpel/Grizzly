@@ -4,27 +4,38 @@ import {
   NumberDataType,
   IntegerDataType,
   ModelCtor,
-  Model
+  Model,
+  Optional
 } from 'sequelize';
 
-type User = {
+export type UserModel = {
   id: number;
   email: string;
   password: string;
-  role: string;
+  role: 'USER' | 'ADMIN';
 };
 
-export const User = sequelize.define<Model<Omit<User, 'id'>>, Model<User>>(
-  'user',
-  {
-    id: { type: DataTypes.INTEGER, primaryKey: true },
-    email: { type: DataTypes.STRING, unique: true },
-    password: { type: DataTypes.STRING },
-    role: { type: DataTypes.STRING, defaultValue: 'USER' }
-  }
-);
+export const User = sequelize.define<
+  Model<UserModel, Optional<UserModel, 'id'>>
+>('user', {
+  id: {
+    type: DataTypes.INTEGER,
+    unique: true,
+    autoIncrement: true,
+    primaryKey: true
+  },
+  email: { type: DataTypes.STRING, unique: true },
+  password: { type: DataTypes.STRING },
+  role: { type: DataTypes.STRING, defaultValue: 'USER' }
+});
 
-export const Basket = sequelize.define('basket', {
+export type BasketModel = Model<{
+  id?: number;
+  userId: number;
+  name: string;
+}>;
+
+export const Basket = sequelize.define<BasketModel>('basket', {
   userId: { type: DataTypes.INTEGER, unique: true, allowNull: false },
   name: { type: DataTypes.STRING, unique: true, allowNull: false }
 });
