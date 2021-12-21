@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "parallelshell  \"npm run webpack-node\" \"npm run start\"",
-    "webpack-node": "webpack --progress --watch",
+    "dev": "parallelshell  \"yarn build\" \"yarn start\"",
+    "build": "webpack --progress --watch",
     "start": "nodemon --require dotenv/config ./build/bundle.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/uuid": "^8.3.3",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
@@ -21,7 +22,8 @@
     "pg-hstore": "^2.3.4",
     "reflect-metadata": "^0.1.13",
     "sequelize": "^6.12.0-beta.1",
-    "sequelize-typescript": "^2.1.1"
+    "sequelize-typescript": "^2.1.1",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
@@ -35,7 +37,7 @@
     "@typescript-eslint/parser": "~4.28.3",
     "cross-env": "^7.0.3",
     "dotenv-webpack": "^7.0.3",
-    "eslint": "^5.16.0",
+    "eslint": "5.16.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "8.1.0",
     "eslint-import-resolver-typescript": "^2.4.0",

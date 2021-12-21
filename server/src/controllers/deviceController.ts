@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import path from 'path';
+import * as uuid from 'uuid';
 import { Device } from '../models/models';
 import { ApiError } from '../error/ApiError';
 
@@ -14,16 +15,29 @@ export class DeviceController implements IDeviceController {
     try {
       const { name } = req.body;
       const { img } = req.files || { img: null };
+      const device = await Device.findOne({ where: { name } });
 
-      const fileName = '';
-
-      if (!(img instanceof Array)) {
-        img?.mv(path.resolve(__dirname, '..', 'static', fileName));
+      if (!img) {
+        return next(ApiError.internal('Файл не добавлен'));
       }
 
-      const device = await Device.create({ name, img: fileName });
+      if (img instanceof Array) {
+        return next(
+          ApiError.internal('Добавлено несколько файлов, но требуется один')
+        );
+      }
 
-      return res.json(device);
+      if (device) {
+        return next(ApiError.internal('Файл с таким именем уже имеется'));
+      }
+
+      const extname = path.extname(img.name);
+      const filename = uuid.v4() + extname;
+      const newDevice = await Device.create({ name, img: filename });
+
+      img.mv(path.resolve(__dirname, '..', 'static', filename));
+
+      return res.json(newDevice);
     } catch (e) {
       next(ApiError.badRequest((e as Error).message));
     }
@@ -38,7 +52,11 @@ export class DeviceController implements IDeviceController {
   }
 
   async getItem(req: Request, res: Response) {
-    res.json({ message: 'Device controller works' });
+    const { id } = req.params;
+
+    const device = await Device.findOne({ where: { id } });
+
+    res.json(device);
   }
 }
 
