@@ -1,4 +1,6 @@
 import sequelize from '../../db';
+import { ArtistModel } from './ArtistModel';
+import { SongModel } from './SongModel';
 import {
   DataTypes,
   NumberDataType,
@@ -35,6 +37,38 @@ export type BasketModel = Model<{
   name: string;
 }>;
 
+export const Artist = sequelize.define<
+  Model<ArtistModel, Optional<ArtistModel, 'id'>>
+>('artist', {
+  id: {
+    type: DataTypes.INTEGER,
+    unique: true,
+    autoIncrement: true,
+    primaryKey: true
+  },
+  email: { type: DataTypes.STRING, unique: true, allowNull: false },
+  password: { type: DataTypes.STRING, allowNull: false },
+  nickname: { type: DataTypes.STRING, unique: true, allowNull: false },
+  avatar: { type: DataTypes.STRING, allowNull: false },
+  role: { type: DataTypes.STRING, defaultValue: 'USER' }
+});
+
+export const Song = sequelize.define<
+  Model<SongModel, Optional<SongModel, 'id'>>
+>('song', {
+  id: {
+    type: DataTypes.INTEGER,
+    unique: true,
+    autoIncrement: true,
+    primaryKey: true
+  },
+  name: { type: DataTypes.STRING, allowNull: false },
+  img: { type: DataTypes.STRING, allowNull: false },
+  artistName: { type: DataTypes.STRING, allowNull: false },
+  artistId: { type: DataTypes.NUMBER, allowNull: false },
+  src: { type: DataTypes.STRING, allowNull: false }
+});
+
 export const Basket = sequelize.define<BasketModel>('basket', {
   userId: { type: DataTypes.INTEGER, unique: true, allowNull: false },
   name: { type: DataTypes.STRING, unique: true, allowNull: false }
@@ -65,6 +99,9 @@ export const DeviceInfo = sequelize.define('device_info', {
 export const TypeBrand = sequelize.define('type_brand', {
   name: { type: DataTypes.STRING, unique: true, allowNull: false }
 });
+
+Artist.hasMany(Song);
+Song.belongsTo(Artist);
 
 User.hasOne(Basket);
 Basket.belongsTo(User);
