@@ -1,8 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
 import { ApiError } from '../error/ApiError';
-import { Artist, User } from '../models/models';
+import { Artist } from '../models/models';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import path from 'path';
+import { artistAvatarValid } from '../validation/artist/artistAvatarValid';
+import { UploadedFile } from 'express-fileupload';
+import { artistRegistrationValid } from '../validation/artist/artistRegistrationValid';
 
 interface IArtistController {
   registration(req: Request, res: Response, next: NextFunction): Promise<any>;
@@ -19,39 +23,41 @@ const generateUserJwt = (id: number, email: string, role: string) => {
 export class ArtistController implements IArtistController {
   async registration(req: Request, res: Response, next: NextFunction) {
     const { email, password, role, nickname } = req.body;
-    const { avatar } = req.files || { avatar: null };
+    const { avatar: userAvatar } = req.files || { avatar: null };
 
-    if (!avatar) {
-      return next(ApiError.internal('Файл не добавлен'));
-    }
+    artistRegistrationValid(next, { userAvatar }, ({ avatar }) => {
+      const extname = path.extname(avatar.name);
 
-    if (!email || !password) {
-      return next(ApiError.badRequest('Некорректный email или password'));
-    }
+      if (!email || !password) {
+        return next(ApiError.badRequest('Некорректный email или password'));
+      }
 
-    const candidate = await Artist.findOne({ where: { email } });
+      const candidate = await Artist.findOne({ where: { email } });
 
-    if (candidate) {
-      return next(
-        ApiError.badRequest('Пользователь с таким email уже существует')
-      );
-    }
-    const hashPassword = await bcrypt.hash(password, 5);
-    const artist = await Artist.create({
-      email,
-      role,
-      password: hashPassword,
-      nickname,
-      avatar
+      if (candidate) {
+        return next(
+          ApiError.badRequest('Пользователь с таким email уже существует')
+        );
+      }
+      const hashPassword = await bcrypt.hash(password, 5);
+      const artist = await Artist.create({
+        email,
+        role,
+        password: hashPassword,
+        nickname,
+        avatar: ''
+      });
+
+      const userId = artist.getDataValue('id');
+      const userEmail = artist.getDataValue('email');
+      const userRole = artist.getDataValue('role');
+
+      const jwtToken = generateUserJwt(userId, userEmail, userRole);
+
+      return res.json(jwtToken);
     });
 
-    const userId = artist.getDataValue('id');
-    const userEmail = artist.getDataValue('email');
-    const userRole = artist.getDataValue('role');
-
-    const jwtToken = generateUserJwt(userId, userEmail, userRole);
-
-    return res.json(jwtToken);
+    // const validAvatar: UploadedFile = avatar as UploadedFile;
   }
 
   async login(req: Request, res: Response, next: NextFunction) {

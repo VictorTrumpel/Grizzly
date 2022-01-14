@@ -1,4 +1,4 @@
-import { artistController } from '../controllers/ArtistController';
+import { artistController } from '../controllers/artistController';
 import { Router, IRouter } from 'express';
 
 const artistRouter: IRouter = Router();

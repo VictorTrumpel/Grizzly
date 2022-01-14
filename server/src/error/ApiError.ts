@@ -1,4 +1,4 @@
-interface IApiError {
+export interface IApiError {
   readonly status: number;
   readonly message: string;
 }
