@@ -23,8 +23,6 @@ export const artistRegistrationValid = async (
   fields: ArtistFields,
   callback: (fields: ArtistValidFields) => void
 ) => {
-  console.log('Валидация началась');
-
   const { userAvatar, userPassword, userEmail, userNickname } = fields;
 
   const {
@@ -48,8 +46,6 @@ export const artistRegistrationValid = async (
   if (!nickname || nickNameErr) {
     return next(nickNameErr);
   }
-
-  console.log('Проверки прошли');
 
   callback({ avatar, email, password, nickname });
 };

@@ -27,11 +27,7 @@ export const loginDataValid = async (
     };
   }
 
-  console.log('Пароль и email на месте');
-
   const candidate = await Artist.findOne({ where: { email } });
-
-  console.log('CANDIDATE');
 
   if (candidate) {
     return {

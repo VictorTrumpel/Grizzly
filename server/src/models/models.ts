@@ -31,7 +31,7 @@ export const Song = sequelize.define<
   name: { type: DataTypes.STRING, allowNull: false },
   img: { type: DataTypes.STRING, allowNull: false },
   artistName: { type: DataTypes.STRING, allowNull: false },
-  artistId: { type: DataTypes.NUMBER, allowNull: false },
+  artistId: { type: DataTypes.INTEGER, allowNull: false },
   src: { type: DataTypes.STRING, allowNull: false }
 });
 

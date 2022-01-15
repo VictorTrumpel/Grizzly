@@ -1,9 +1,8 @@
 import { UploadedFile } from 'express-fileupload';
 import { ApiError, IApiError } from '../../error/ApiError';
-import { NextFunction } from 'express';
 import path from 'path';
 
-const ALLOWABLE_EXT = ['jpg', 'png'];
+const ALLOWABLE_EXT = ['.jpg', '.png'];
 
 export const artistAvatarValid = (
   avatar: UploadedFile | UploadedFile[] | null
@@ -21,7 +20,7 @@ export const artistAvatarValid = (
 
   const extname = path.extname(avatar.name);
 
-  if (!!~ALLOWABLE_EXT.indexOf(extname)) {
+  if (!~ALLOWABLE_EXT.indexOf(extname)) {
     return {
       avatar: null,
       err: ApiError.internal(
