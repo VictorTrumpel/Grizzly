@@ -1,0 +1,1 @@
+export { artistController } from './artistController';

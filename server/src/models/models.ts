@@ -4,7 +4,7 @@ import { SongModel } from './SongModel';
 import { DataTypes, Model, Optional } from 'sequelize';
 
 export const Artist = sequelize.define<
-  Model<ArtistModel, Optional<ArtistModel, 'id'>>
+  Model<ArtistModel, Optional<ArtistModel, 'id' | 'role'>>
 >('artist', {
   id: {
     type: DataTypes.INTEGER,
