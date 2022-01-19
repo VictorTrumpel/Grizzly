@@ -6,6 +6,8 @@ import { authMiddleware } from '../middleware/authMiddleware';
 
 const artistRouter: IRouter = Router();
 
+artistRouter.get('/', authMiddleware, artistController.getList);
+
 artistRouter.get('/auth', authMiddleware, artistController.auth);
 
 artistRouter.post('/login', function (...args) {

@@ -16,6 +16,7 @@ import {
   loginValid
 } from '../../validation/artist/login/loginValid';
 import { getArtistTokenMethod } from './methods/getArtistTokenMethod';
+import { ArtistModel } from '../../models/ArtistModel';
 
 interface IArtistController {
   registration(req: Request, res: Response, next: NextFunction): void;
@@ -37,6 +38,19 @@ export class ArtistController implements IArtistController {
     };
 
     registrationValid(next, userRegData, this.addArtist.bind(null, res));
+  }
+
+  async getList(req: Request, res: Response, next: NextFunction) {
+    const artistList = await Artist.findAll(req.body);
+
+    const parsedList = artistList.map((artist) => ({
+      id: artist.getDataValue('id'),
+      email: artist.getDataValue('email'),
+      nickname: artist.getDataValue('nickname'),
+      avatar: artist.getDataValue('avatar')
+    }));
+
+    return res.json(parsedList);
   }
 
   async login(req: Request, res: Response, next: NextFunction) {
