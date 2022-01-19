@@ -1,27 +1,27 @@
 import { UploadedFile } from 'express-fileupload';
 import { NextFunction } from 'express';
-import { artistAvatarValid } from './artistAvatarValid';
+import { avatarValid } from './avatarValid';
 import { loginDataValid } from './loginDataValid';
 import { nickNameValid } from './nickNameValid';
 
-export type ArtistFields = {
+export type RegistrationsFields = {
   userAvatar: UploadedFile | UploadedFile[] | null;
   userEmail: any;
   userPassword: any;
   userNickname: any;
 };
 
-export type ArtistValidFields = {
+export type RegistrationsValidFields = {
   avatar: UploadedFile;
   email: string;
   password: string;
   nickname: string;
 };
 
-export const artistRegistrationValid = async (
+export const registrationValid = async (
   next: NextFunction,
-  fields: ArtistFields,
-  callback: (fields: ArtistValidFields) => void
+  fields: RegistrationsFields,
+  callback: (fields: RegistrationsValidFields) => void
 ) => {
   const { userAvatar, userPassword, userEmail, userNickname } = fields;
 
@@ -31,7 +31,7 @@ export const artistRegistrationValid = async (
     err: loginDataErr
   } = await loginDataValid(userEmail, userPassword);
 
-  const { avatar, err: avatarErr } = artistAvatarValid(userAvatar);
+  const { avatar, err: avatarErr } = avatarValid(userAvatar);
 
   const { nickname, err: nickNameErr } = await nickNameValid(userNickname);
 

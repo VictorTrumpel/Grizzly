@@ -1,5 +1,5 @@
 import { Response } from 'express';
-import { ArtistValidFields } from '../../../validation/artist/artistRegistrationValid';
+import { RegistrationsValidFields } from '../../../validation/artist/registration/registrationValid';
 import bcrypt from 'bcrypt';
 import { Artist } from '../../../models/models';
 import { ArtistController } from '../artistController';
@@ -8,12 +8,14 @@ import * as uuid from 'uuid';
 
 export const addArtistMethod = async (
   res: Response,
-  artistData: ArtistValidFields
+  artistData: RegistrationsValidFields
 ) => {
   const { password, email, avatar, nickname } = artistData;
 
   const extname = path.extname(avatar.name);
   const filename = uuid.v4() + extname;
+
+  avatar.mv(path.resolve(__dirname, '..', 'static', filename));
 
   const hashPassword = await bcrypt.hash(password, 5);
 

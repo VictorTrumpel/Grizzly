@@ -1,5 +1,5 @@
-import { ApiError, IApiError } from '../../error/ApiError';
-import { Artist } from '../../models/models';
+import { ApiError, IApiError } from '../../../error/ApiError';
+import { Artist } from '../../../models/models';
 
 type LoginDataPayload = {
   email: string | null;

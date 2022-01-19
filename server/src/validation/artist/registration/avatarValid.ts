@@ -1,10 +1,10 @@
 import { UploadedFile } from 'express-fileupload';
-import { ApiError, IApiError } from '../../error/ApiError';
+import { ApiError, IApiError } from '../../../error/ApiError';
 import path from 'path';
 
 const ALLOWABLE_EXT = ['.jpg', '.png'];
 
-export const artistAvatarValid = (
+export const avatarValid = (
   avatar: UploadedFile | UploadedFile[] | null
 ): { avatar: UploadedFile | null; err: IApiError | null } => {
   if (!avatar) {
