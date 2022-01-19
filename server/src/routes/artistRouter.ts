@@ -1,5 +1,5 @@
 import { artistController } from '../controllers/artistController';
-import { ArtistController } from '../controllers/artistController/artistController';
+
 import { Router, IRouter } from 'express';
 
 import { authMiddleware } from '../middleware/authMiddleware';

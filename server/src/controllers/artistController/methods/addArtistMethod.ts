@@ -2,7 +2,7 @@ import { Response } from 'express';
 import { RegistrationsValidFields } from '../../../validation/artist/registration/registrationValid';
 import bcrypt from 'bcrypt';
 import { Artist } from '../../../models/models';
-import { ArtistController } from '../artistController';
+import { ArtistController } from '../index';
 import path from 'path';
 import * as uuid from 'uuid';
 

@@ -4,7 +4,7 @@ import { ApiError } from '../../../error/ApiError';
 import bcrypt from 'bcrypt';
 
 import { LoginValidFields } from '../../../validation/artist/login/loginValid';
-import { ArtistController } from '../artistController';
+import { ArtistController } from '../index';
 
 export const getArtistTokenMethod = async (
   res: Response,
