@@ -11,7 +11,7 @@ export type RegistrationsFields = {
   userNickname: any;
 };
 
-export type RegistrationsValidFields = {
+export type ValidRegistrationsFields = {
   avatar: UploadedFile;
   email: string;
   password: string;
@@ -21,7 +21,7 @@ export type RegistrationsValidFields = {
 export const registrationValid = async (
   next: NextFunction,
   fields: RegistrationsFields,
-  callback: (fields: RegistrationsValidFields) => void
+  callback: (fields: ValidRegistrationsFields) => void
 ) => {
   const { userAvatar, userPassword, userEmail, userNickname } = fields;
 

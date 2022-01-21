@@ -6,6 +6,8 @@ import { authMiddleware } from '../middleware/authMiddleware';
 
 const artistRouter: IRouter = Router();
 
+artistRouter.get('/:id', authMiddleware, artistController.getArtist);
+
 artistRouter.get('/', authMiddleware, artistController.getList);
 
 artistRouter.get('/auth', authMiddleware, artistController.auth);

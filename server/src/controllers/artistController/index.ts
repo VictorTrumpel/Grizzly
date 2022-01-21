@@ -35,8 +35,21 @@ export class ArtistController implements IArtistController {
     registrationValid(next, userRegData, this.addArtist.bind(null, res));
   }
 
+  async getArtist(req: Request, res: Response, next: NextFunction) {
+    const id = req.path.replace('/', '');
+
+    const artist = await Artist.findOne({ where: { id } });
+
+    return res.json({
+      id: artist?.getDataValue('id'),
+      email: artist?.getDataValue('email'),
+      nickname: artist?.getDataValue('nickname'),
+      avatar: artist?.getDataValue('avatar')
+    });
+  }
+
   async getList(req: Request, res: Response, next: NextFunction) {
-    const artistList = await Artist.findAll(req.body);
+    const artistList = await Artist.findAll({ where: req.body });
 
     const parsedList = artistList.map((artist) => ({
       id: artist.getDataValue('id'),

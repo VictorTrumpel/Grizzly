@@ -1,5 +1,5 @@
 import { Response } from 'express';
-import { RegistrationsValidFields } from '../../../validation/artist/registration/registrationValid';
+import { ValidRegistrationsFields } from '../../../validation/artist/registration/registrationValid';
 import bcrypt from 'bcrypt';
 import { Artist } from '../../../models/models';
 import { ArtistController } from '../index';
@@ -8,7 +8,7 @@ import * as uuid from 'uuid';
 
 export const addArtistMethod = async (
   res: Response,
-  artistData: RegistrationsValidFields
+  artistData: ValidRegistrationsFields
 ) => {
   const { password, email, avatar, nickname } = artistData;
 
