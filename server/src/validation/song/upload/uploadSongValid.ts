@@ -10,7 +10,7 @@ export type SongUploadFields = {
   userSongName: any;
 };
 
-export type ValidUploadFields = {
+export type SongUploadValidFields = {
   songFile: UploadedFile;
   songImg: UploadedFile;
   songName: string;
@@ -19,7 +19,7 @@ export type ValidUploadFields = {
 export const uploadSongValid = (
   next: NextFunction,
   fields: SongUploadFields,
-  callback: (fields: ValidUploadFields) => void
+  callback: (fields: SongUploadValidFields) => void
 ) => {
   const { userSongImg, userSongFile, userSongName } = fields;
 

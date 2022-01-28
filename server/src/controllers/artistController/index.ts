@@ -35,7 +35,7 @@ export class ArtistController implements IArtistController {
     registrationValid(next, userRegData, this.addArtist.bind(null, res));
   }
 
-  async getArtist(req: Request, res: Response, next: NextFunction) {
+  async getArtist(req: Request, res: Response) {
     const id = req.path.replace('/', '');
 
     const artist = await Artist.findOne({ where: { id } });

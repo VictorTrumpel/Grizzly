@@ -11,13 +11,18 @@ export const songFileValid = (
   err: IApiError | null;
 } => {
   if (!songFile) {
-    return { songFile: null, err: ApiError.internal('Файл не добавлен') };
+    return {
+      songFile: null,
+      err: ApiError.internal('songFile: Файл не добавлен')
+    };
   }
 
   if (songFile instanceof Array) {
     return {
       songFile: null,
-      err: ApiError.internal('Добавлено несколько файлов, но требуется один')
+      err: ApiError.internal(
+        'songFile: Добавлено несколько файлов, но требуется один'
+      )
     };
   }
 
@@ -27,7 +32,7 @@ export const songFileValid = (
     return {
       songFile: null,
       err: ApiError.internal(
-        `Допустимые расширения файла: ${ALLOWABLE_EXT.join(', ')}`
+        `songFile: Допустимые расширения файла: ${ALLOWABLE_EXT.join(', ')}`
       )
     };
   }

@@ -8,4 +8,7 @@ songRouter.post('/upload', function (...args) {
   songController.upload(...args);
 });
 
+songRouter.get('/', songController.getList);
+songRouter.get('/:id', songController.getSong);
+
 export default songRouter;

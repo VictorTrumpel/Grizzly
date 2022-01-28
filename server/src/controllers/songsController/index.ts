@@ -3,6 +3,8 @@ import {
   SongUploadFields,
   uploadSongValid
 } from '../../validation/song/upload/uploadSongValid';
+import { addSongMethod } from './methods/addSongMethod';
+import { Song } from '../../models/models';
 
 type ISongController = {
   getList(req: Request, res: Response, next: NextFunction): Promise<any>;
@@ -10,6 +12,8 @@ type ISongController = {
 };
 
 export class SongController implements ISongController {
+  private addSong = addSongMethod;
+
   async upload(req: Request, res: Response, next: NextFunction) {
     const songUploadData: SongUploadFields = {
       userSongFile: req?.files?.songFile || null,
@@ -17,12 +21,26 @@ export class SongController implements ISongController {
       userSongName: req.body.songName
     };
 
-    uploadSongValid(next, songUploadData, this.addSong.bind(null, res));
+    uploadSongValid(
+      next,
+      songUploadData,
+      this.addSong.bind(null, req, res, next)
+    );
   }
 
-  private addSong(res: Response) {}
+  async getSong(req: Request, res: Response) {
+    const id = req.path.replace('/', '');
 
-  async getList(req: Request, res: Response, next: NextFunction) {}
+    const song = await Song.findOne({ where: { id } });
+
+    return res.json(song);
+  }
+
+  async getList(req: Request, res: Response, next: NextFunction) {
+    const artistList = await Song.findAll({ where: req.body });
+
+    res.json(artistList);
+  }
 }
 
 export const songController = new SongController();
