@@ -110,3 +110,4 @@ server/node_modules/
 server/build/
 node_modules/
 server/static/
+server/package-lock.json
