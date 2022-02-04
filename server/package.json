@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "parallelshell  \"yarn build\" \"yarn start\"",
+    "dev": "parallelshell  \"npm run build\" \"npm run start\"",
     "build": "webpack --progress --watch",
     "start": "nodemon --require dotenv/config ./build/bundle.js"
   },

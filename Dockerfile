@@ -1,10 +1,14 @@
-FROM node:14
+FROM node:14-alpine AS app-base
+
+# Install system dependencies for this package.
+RUN apk add --no-cache imagemagick
 
 WORKDIR /server
 
-COPY package*.json ./
-RUN yurn install
+COPY  . .
 
-COPY . .
+RUN npm install \
+    && npm run build \
+    && printf "ls\nnpm run server\nnpm run generator\n" > entrypoint.sh
 
-CMD ["yarn", "dev"]
+CMD ["/bin/sh", "entrypoint.sh"]
